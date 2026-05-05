@@ -1,0 +1,17 @@
+#Змініть декілька операторів INNER на LEFT чи RIGHT. Визначте, що відбувається з кількістю рядків. Чому? 
+#Напишіть відповідь у текстовому файлі.
+
+SELECT COUNT(*) AS total_rows
+FROM order_details
+RIGHT JOIN orders ON order_details.order_id = orders.id
+RIGHT JOIN customers ON orders.customer_id = customers.id
+RIGHT JOIN employees ON orders.employee_id = employees.employee_id
+LEFT JOIN shippers ON orders.shipper_id = shippers.id
+LEFT JOIN products ON order_details.product_id = products.id
+LEFT JOIN categories ON products.category_id = categories.id
+LEFT JOIN suppliers ON products.supplier_id = suppliers.id;
+
+#Висновок: при заміні INNER JOIN на LEFT JOIN кількість рядків зростає, якщо у головній 
+#таблиці є записи (ключі), для яких немає відповідних збігів у підпорядкованій таблиці .
+#Це допомагає виявити "сирітські" записи та порушення цілісності даних, які зазвичай 
+#ігноруються при використанні INNER JOIN.
